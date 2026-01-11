@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cavender'sCatCorner</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* ====== GLOBAL STYLES ====== */
+        :root {
+            --deep-purple: #5A2A83;
+            --bright-orange: #FF8A3D;
+            --lavender: #D9C6FF;
+            --cream: #FFF7EB;
+            --dark: #2b1b3a;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Trebuchet MS", Arial, sans-serif;
+            background: radial-gradient(circle at top, #6f35aa, #2b1b3a 60%);
+            color: #2b1b3a;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* ====== HEADER ====== */
+        header {
+            background: linear-gradient(135deg, var(--deep-purple), #2b1b3a);
+            color: #fff;
+            padding: 20px 20px 10px;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+        }
+
+        .header-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-cat {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #ffdfb3, #ff8a3d);
+            position: relative;
+            box-shadow: 0 0 0 4px #fff, 0 4px 10px rgba(0,0,0,0.4);
+        }
+
+        .logo-cat::before,
+        .logo-cat::after {
+            content: "";
+            position: absolute;
+            width: 20px;
+            height: 24px;
+            background: #ffdfb3;
+            border-radius: 50% 50% 0 0;
+            top: -8px;
+        }
+        .logo-cat::before {
+            left: 5px;
+            transform: rotate(-15deg);
+        }
+        .logo-cat::after {
+            right: 5px;
+            transform: rotate(15deg);
+        }
+
+        .site-title {
+            font-size: 1.9rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .site-subtitle {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* ====== NAVBAR ====== */
+        nav {
+            background: rgba(255, 138, 61, 0.95);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+        }
+
+        .nav-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            padding: 10px 15px;
+        }
+
+        .nav-link {
+            color: #fff;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-size: 0.8rem;
+            padding: 8px 14px;
+            border-radius: 999px;
+            border: 2px solid rgba(255,255,255,0.8);
+            background: rgba(90, 42, 131, 0.35);
+            transition: all 0.2s ease;
+        }
+
+        .nav-link:hover {
+            background: #fff;
+            color: var(--deep-purple);
+            transform: translateY(-2px);
+        }
+
+        /* ====== MAIN LAYOUT ====== */
+        main {
+            max-width: 1100px;
+            margin: 20px auto 60px;
+            padding: 0 15px 40px;
+            position: relative;
+        }
+
+        /* playful background cats */
+        .bg-cat {
+            position: fixed;
+            opacity: 0.06;
+            font-size: 90px;
+            pointer-events: none;
+            z-index: -1;
+        }
+        .bg-cat.left {
+            top: 20%;
+            left: 3%;
+        }
+        .bg-cat.right {
+            bottom: 10%;
+            right: 5%;
+        }
+
+        /* ====== HERO SECTION ====== */
+        .hero {
+            background: linear-gradient(135deg, var(--lavender), var(--cream));
+            border-radius: 20px;
+            padding: 25px;
+            display: grid;
+            grid-template-columns: 2fr 1.2fr;
+            gap: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+            margin-bottom: 30px;
+        }
+
+        .hero h1 {
+            margin-top: 0;
+            color: var(--deep-purple);
+            font-size: 2.1rem;
+        }
+
+        .hero p {
+            font-size: 1rem;
+        }
+
+        .hero-buttons {
+            margin-top: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 10px 18px;
+            border-radius: 999px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-primary {
+            background: var(--bright-orange);
+            color: #fff;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+        }
+
+        .btn-secondary {
+            background: #fff;
+            color: var(--deep-purple);
+            border: 2px dashed var(--deep-purple);
+        }
+
+        .hero-portrait-wall {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .frame {
+            background: #f3e0c3;
+            padding: 6px;
+            border-radius: 12px;
+            border: 3px solid #b78b54;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.35);
+            position: relative;
+        }
+
+        .frame::before {
+            content: "";
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 16px;
+            height: 16px;
+            background: #d5a76a;
+            border-radius: 50%;
+            box-shadow: 0 4px 0 rgba(0,0,0,0.25);
+        }
+
+        .frame-inner {
+            background: linear-gradient(145deg, #ffffff, #ffe4c7);
+            border-radius: 8px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+        }
+
+        .frame-label {
+            text-align: center;
+            font-size: 0.75rem;
+            margin-top: 4px;
+            font-weight: bold;
+            color: #5c3b1a;
+        }
+
+        /* ====== SECTION STYLES ====== */
+        section {
+            margin-top: 35px;
+            background: rgba(255,247,235,0.98);
+            border-radius: 18px;
+            padding: 22px 20px 25px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        section::after {
+            content: "🐾";
+            position: absolute;
+            font-size: 40px;
+            opacity: 0.08;
+            right: 12px;
+            bottom: 5px;
+        }
+
+        section h2 {
+            margin-top: 0;
+            color: var(--deep-purple);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.4rem;
+        }
+
+        .section-tagline {
+            font-size: 0.9rem;
+            margin-top: -6px;
+            margin-bottom: 10px;
+            color: #7a5c98;
+        }
+
+        .pill {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: rgba(90,42,131,0.1);
+            color: var(--deep-purple);
+            font-size: 0.75rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 5px;
+        }
+
+        .two-col {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr;
+            gap: 15px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 6px;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit,minmax(180px,1fr));
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 10px 12px;
+            border: 2px solid #f4d1b0;
+            position: relative;
+        }
+
+        .card::before {
+            content: "🐱";
+            position: absolute;
+            top: 4px;
+            right: 8px;
+            opacity: 0.6;
+            font-size: 1rem;
+        }
+
+        .card-title {
+            font-weight: bold;
+            color: #c2642c;
+            font-size: 0.9rem;
+        }
+
+        .card-text {
+            font-size: 0.85rem;
+            margin-top: 4px;
+        }
+
+        /* ====== BLOG SECTION ====== */
+        .blog-intro {
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+        }
+
+        .blog-post {
+            background: #fff;
+            border-radius: 12px;
+            padding: 12px 14px;
+            margin-bottom: 12px;
+            border-left: 4px solid var(--bright-orange);
+            position: relative;
+        }
+
+        .blog-post::before {
+            content: "✍️";
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.1rem;
+        }
+
+        .blog-title {
+            font-weight: bold;
+            color: var(--deep-purple);
+        }
+
+        .blog-meta {
+            font-size: 0.75rem;
+            color: #888;
+            margin-bottom: 5px;
+        }
+
+        .blog-text {
+            font-size: 0.9rem;
+        }
+
+        .blog-note {
+            font-size: 0.8rem;
+            margin-top: 10px;
+            padding: 8px 10px;
+            border-radius: 8px;
+            background: rgba(217,198,255,0.4);
+        }
+
+        /* ====== FOOTER ====== */
+        footer {
+            background: #1a1023;
+            color: #dbc9ff;
+            text-align: center;
+            padding: 18px 10px 22px;
+            font-size: 0.8rem;
+        }
+
+        footer .paw-row {
+            margin-bottom: 6px;
+        }
+
+        /* ====== RESPONSIVE ====== */
+        @media (max-width: 800px) {
+            .hero {
+                grid-template-columns: 1fr;
+            }
+            .hero-portrait-wall {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .two-col {
+                grid-template-columns: 1fr;
+            }
+            .hero-portrait-wall {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .site-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Background cats -->
+    <div class="bg-cat left">🐈</div>
+    <div class="bg-cat right">🐈‍⬛</div>
+
+    <!-- HEADER -->
+    <header>
+        <div class="header-inner">
+            <div class="logo-cat" aria-hidden="true"></div>
+            <div>
+                <div class="site-title">Cavender'sCatCorner</div>
+                <div class="site-subtitle">A cozy, quirky corner for cat care, plants, food & real-life feline tales.</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- NAVBAR -->
+    <nav>
+        <div class="nav-inner">
+            <a class="nav-link" href="#home">Home</a>
+            <a class="nav-link" href="#plants">Cat-Safe Plants</a>
+            <a class="nav-link" href="#food">Best Cat Foods</a>
+            <a class="nav-link" href="#care">Cat Care Guides</a>
+            <a class="nav-link" href="#blog">My Cat Blog</a>
+        </div>
+    </nav>
+
+    <main>
+        <!-- HERO / HOME -->
+        <section id="home" class="hero">
+            <div>
+                <span class="pill">Welcome to the corner</span>
+                <h1>Where cats rule, humans learn, and plants stay safe.</h1>
+                <p>
+                    Cavender'sCatCorner is your playful guide to happier, healthier cats. 
+                    Explore cat-safe plants, the best foods, practical care tips, and follow along
+                    as I share real stories from life with my own chaos goblins in fur.
+                </p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" onclick="document.getElementById('blog').scrollIntoView({behavior:'smooth'})">
+                        Read my latest cat chaos
+                    </button>
+                    <button class="btn btn-secondary" onclick="document.getElementById('plants').scrollIntoView({behavior:'smooth'})">
+                        See cat-safe plants
+                    </button>
+                </div>
+            </div>
+            <div class="hero-portrait-wall" aria-hidden="true">
+                <div class="frame">
+                    <div class="frame-inner">😼</div>
+                    <div class="frame-label">The Judgy One</div>
+                </div>
+                <div class="frame">
+                    <div class="frame-inner">🐈‍⬛</div>
+                    <div class="frame-label">The Midnight Zoomer</div>
+                </div>
+                <div class="frame">
+                    <div class="frame-inner">😺</div>
+                    <div class="frame-label">The Sunshine Napper</div>
+                </div>
+                <div class="frame">
+                    <div class="frame-inner">🙀</div>
+                    <div class="frame-label">The Drama Queen</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CAT-SAFE PLANTS -->
+        <section id="plants">
+            <span class="pill">Green but cat-approved</span>
+            <h2>🌿 Cat-safe plants</h2>
+            <div class="section-tagline">
+                Build your jungle without giving your cat a reason to visit the vet.
+            </div>
+
+            <div class="two-col">
+                <div>
+                    <p><strong>Safe plant buddies your cat can coexist with:</strong></p>
+                    <ul>
+                        <li><strong>Spider plant:</strong> Tough, bouncy leaves, totally non-toxic, but may get “haircuts” from curious cats.</li>
+                        <li><strong>Areca palm:</strong> Big, tropical, and safe for feline roommates.</li>
+                        <li><strong>Cat grass:</strong> Specifically grown for cats to nibble on; great for indoor enrichment.</li>
+                        <li><strong>Calathea varieties:</strong> Beautiful patterned leaves without the toxicity drama.</li>
+                        <li><strong>Boston fern:</strong> Fluffy, safe, and perfect for hanging baskets out of swat range.</li>
+                    </ul>
+                    <p style="font-size:0.85rem;">
+                        Always double-check specific plant names with a trusted source (like ASPCA’s toxic/non-toxic list), 
+                        especially if you’re adopting a new leafy roommate.
+                    </p>
+                </div>
+                <div>
+                    <div class="card">
+                        <div class="card-title">Plants to keep far away</div>
+                        <div class="card-text">
+                            Lilies, philodendrons, pothos, and sago palms can be dangerous or even deadly for cats. 
+                            Keep them out of the house or completely out of reach.
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-title">Little tip</div>
+                        <div class="card-text">
+                            Create a “cat herb bar” with pots of cat grass and catnip so your cat has safe plants to obsess over.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BEST CAT FOODS -->
+        <section id="food">
+            <span class="pill">What’s in the bowl matters</span>
+            <h2>🍽️ Best types of cat food</h2>
+            <div class="section-tagline">
+                Because “he meowed at it” is not the same as “this is good for him.”
+            </div>
+
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-title">Wet vs dry food</div>
+                    <div class="card-text">
+                        Wet food usually helps with hydration and can be easier on kidneys. 
+                        Dry food is convenient but shouldn’t be the only source of moisture for most cats.
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-title">Reading the label</div>
+                    <div class="card-text">
+                        Look for real named meats (like chicken, turkey, salmon) as the first ingredient, 
+                        and fewer fillers like corn or wheat.
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-title">Kittens</div>
+                    <div class="card-text">
+                        Need higher calories, more protein, and specific kitten formulas to support growth and development.
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-title">Adult & senior cats</div>
+                    <div class="card-text">
+                        Adult cats do best on balanced maintenance diets. 
+                        Seniors might need formulas that support joint health and kidneys — a vet can guide this.
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-title">Treats vs meals</div>
+                    <div class="card-text">
+                        Treats should stay a small portion of daily calories. 
+                        Your cat may disagree with this policy, but their health won’t.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CAT CARE GUIDES -->
+        <section id="care">
+            <span class="pill">Daily life with tiny lions</span>
+            <h2>🧼 Cat care guides</h2>
+            <div class="section-tagline">
+                Grooming, litter, enrichment, and all the little things that make their nine lives better.
+            </div>
+
+            <div class="two-col">
+                <div>
+                    <h3>Grooming & hygiene</h3>
+                    <ul>
+                        <li><strong>Brushing:</strong> Regular brushing reduces hairballs and shedding, especially in long-haired cats.</li>
+                        <li><strong>Nails:</strong> Trim tips carefully or ask a groomer/vet if you’re nervous.</li>
+                        <li><strong>Eyes & ears:</strong> Gently wipe away gunk with a soft, slightly damp cloth if needed.</li>
+                    </ul>
+
+                    <h3>Litter box wisdom</h3>
+                    <ul>
+                        <li><strong>Rule of thumb:</strong> Number of cats + one extra box whenever possible.</li>
+                        <li><strong>Placement:</strong> Quiet, low-traffic spots where they feel safe, not trapped.</li>
+                        <li><strong>Cleanliness:</strong> Scooping daily and washing regularly goes a long way for both of you.</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3>Enrichment & behavior</h3>
+                    <ul>
+                        <li><strong>Playtime:</strong> Wand toys, chase games, and short daily play sessions keep boredom and mischief down.</li>
+                        <li><strong>Vertical space:</strong> Cat trees, shelves, and window perches make life more interesting.</li>
+                        <li><strong>Scratching posts:</strong> Offer sturdy posts or boards so your furniture has a fighting chance.</li>
+                    </ul>
+                    <p style="font-size:0.85rem;">
+                        Behavior changes (hiding, aggression, litter box issues) can be your cat’s way of saying something’s wrong —
+                        always worth asking a vet if you’re worried.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- BLOG / LIVE SECTION -->
+        <section id="blog">
+            <span class="pill">Real life with my cats</span>
+            <h2>✍️ Cavender’s cat blog</h2>
+            <div class="section-tagline">
+                The unfiltered stories, small disasters, and soft moments with the cats who inspired this corner.
+            </div>
+
+            <p class="blog-intro">
+                This is where I share real stories from life with my cats — from 3 a.m. zoomies to 
+                the quiet headbutts that fix a bad day. You can keep adding new posts right below as time goes on.
+            </p>
+
+            <!-- Example post 1 -->
+            <div class="blog-post">
+                <div class="blog-title">The night someone discovered the blinds</div>
+                <div class="blog-meta">Posted: <em>Your date here</em></div>
+                <div class="blog-text">
+                    Write about the time your cat decided the blinds were their new mortal enemy,
+                    or the exact moment you realized silence at 2 a.m. is more suspicious than any noise.
+                </div>
+            </div>
+
+            <!-- Example post 2 -->
+            <div class="blog-post">
+                <div class="blog-title">Sunbeam wars: who gets the spot?</div>
+                <div class="blog-meta">Posted: <em>Your date here</em></div>
+                <div class="blog-text">
+                    Share how your cats negotiate (or don’t) over their favorite window spot, 
+                    and how many photos you took instead of intervening.
+                </div>
+            </div>
+
+            <div class="blog-note">
+                To add a new entry, copy one of the <strong>&lt;div class="blog-post"&gt; ... &lt;/div&gt;</strong> blocks above,
+                paste it below, and edit the title, date, and text.  
+                When you’re done, save the file and upload it to GitHub again to update your live blog.
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="paw-row">🐾 🐾 🐾</div>
+        <div>Cavender'sCatCorner · Built with love, cat hair, and a little HTML.</div>
+        <div>Update this site anytime by editing <code>index.html</code> and pushing it to GitHub.</div>
+    </footer>
+</body>
+</html>
